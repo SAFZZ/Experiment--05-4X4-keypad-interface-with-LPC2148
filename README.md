@@ -1,10 +1,13 @@
 # Experiment--05-4X4-keypad-interface-with-LPC2148
 
-Name : SAFA
+Name :SAFA
 
-Roll no : 212220230040
+Roll no :212220230040
 
-## Interfacing a 4X4 keypad LPC2148 ARM 7 Microcontroller 
+Date of experiment :20/11/22
+
+ 
+### Interfacing a 4X4 keypad LPC2148 ARM 7 Microcontroller 
 
 ## Aim: To Interface 4x4 keypad interface  LPC2148 ARM 7 and write a code for displaying the inputs on a 16x2 lcd 
 ## Components required: Proteus ISIS professional suite, Kiel μ vision 5 Development environment 
@@ -61,7 +64,7 @@ With that current flow a positive voltage of +5V appears at R3 pin. Since all RO
 •	From previous step, we have known the COLUMN number of key pressed and now we know ROW number. With that we can match the key being pressed. We can take the key INPUT provided by this way for 4X4
 •	
 
-## Procedure:
+Procedure:
 For creation of project on    Kiel μ vision 5 Development environment (LPC21 XX/48/38)
 1.	Click on the menu Project — New µVision Project creates a new project. Select an empty folder and enter the project name, for example Project1. It is good practice to use a separate folder for each project.
 2.	Next, the dialog Select Device for Target opens.
@@ -138,8 +141,9 @@ Step 9: Select the hex file from the Kiel program folder and import the program 
 
 
 ## Kiel - Program:
+
 ```
-#include <lpc21xx.h> 
+#include <lpc21xx.h>
 #define RS (1<<0)
 #define RW (1<<1)
 #define E (1<<2)
@@ -157,7 +161,7 @@ int main(void)
  IODIR1= 0x00780000; //Configure P1.18, P1.17, P1.16 as output(for rows and column)
  IODIR0= 0x00FF0007;  //Configure P0.23 - P0.16 as output for lcd data & P0.0,P0.1,P0.2 for lcd control lines.
  LCD_init();    //Initialize LCD 16x2
- LCD_command(0x01); 
+ LCD_command(0x01);
  while(1)
    {
       IOCLR1|=(1<<19);               //Making row1 LOW
@@ -165,77 +169,77 @@ int main(void)
       if(!(IOPIN1&(1<<16)))             //Scan for key press
        {
         while(!(IOPIN1&(1<<16)));
-        LCD_data('1');                          
+        LCD_data('1');
        }
       if(!(IOPIN1&(1<<17)))
        {
          while(!(IOPIN1&(1<<17)));
-          LCD_data('2'); 
+          LCD_data('2');
        }
       if(!(IOPIN1&(1<<18)))
        {
          while(!(IOPIN1&(1<<18)));
-          LCD_data('3'); 
+          LCD_data('3');
        }
       IOCLR1|=(1<<20);
       IOSET1|=(1<<21)|(1<<22)|(1<<19);
       if(!(IOPIN1&(1<<16)))
 {
         while(!(IOPIN1&(1<<16)));
-         LCD_data('4'); 
+         LCD_data('4');
       }
       if(!(IOPIN1&(1<<17)))
 {
         while(!(IOPIN1&(1<<17)));
-         LCD_data('5'); 
+         LCD_data('5');
      }
       if(!(IOPIN1&(1<<18)))
 {
         while(!(IOPIN1&(1<<18)));
-         LCD_data('6'); 
+         LCD_data('6');
      }
       IOCLR1|=(1<<21);
       IOSET1|=(1<<22)|(1<<20)|(1<<19);
       if(!(IOPIN1&(1<<16)))
 {
         while(!(IOPIN1&(1<<16)));
-         LCD_data('7'); 
+         LCD_data('7');
      }
       if(!(IOPIN1&(1<<17)))
 {
        while(!(IOPIN1&(1<<17)));
-        LCD_data('8'); 
+        LCD_data('8');
     }
       if(!(IOPIN1&(1<<18)))
 {
         while(!(IOPIN1&(1<<18)));
-         LCD_data('9'); 
+         LCD_data('9');
 }
       IOCLR1|=(1<<22);
       IOSET1|=(1<<19)|(1<<20)|(1<<21);
       if(!(IOPIN1&(1<<16)))
 {
         while(!(IOPIN1&(1<<16)));
-         LCD_data('*'); 
+         LCD_data('*');
 }
       if(!(IOPIN1&(1<<17)))
 {
         while(!(IOPIN1&(1<<17)));
-         LCD_data('0'); 
+         LCD_data('0');
 }
       if(!(IOPIN1&(1<<18)))
 {
         while(!(IOPIN1&(1<<18)));
-         LCD_data('#'); 
-} 
+         LCD_data('#');
+}
    }
 }
 
 
 //Function to generate software delay
 //Calibrated to 1ms
-void  delay_ms(unsigned char time)    
-{  
+void  delay_ms(unsigned char time)
+{
  unsigned int  i, j;
  for (j=0; j<time; j++)
  {
@@ -251,7 +255,7 @@ void LCD_command(unsigned char command)
  IOCLR0=RS;     // RS=0 for command
  IOCLR0=RW;     // RW=0 for write
  IOSET0=command<<16; // put command on data line
- IOSET0=E;   // en=1 
+ IOSET0=E;   // en=1
  delay_ms(10) ;   // delay
  IOCLR0=E;    // en=0
 }
@@ -262,7 +266,7 @@ void LCD_data(unsigned char data)
  IOSET0=RS;     // RS=1 for data
  IOCLR0=RW;     // RW=0 for write
  IOSET0= data<<16;  // put command on data line
- IOSET0=E;   //en=1 
+ IOSET0=E;   //en=1
  delay_ms(10) ;    //delay
  IOCLR0=E;   //en=0
  }
@@ -277,20 +281,20 @@ void LCD_init()
     delay_ms(10) ;   // delay
  LCD_command(0x01);  //clear lcd (clear command)
  delay_ms(10) ;   // delay
- LCD_command(0x80); 
+ LCD_command(0x80);
   delay_ms(10) ;//set cursor to 0th location 1st lne
- 
+
 }
 ```
 
-## Output screen shots :
-### Set Up:
-![output](ss1.png)
-### Output:
-![output](ss2.png)
-### Layout:
-![output](ss3.png)
 
+## Output screen shots :
+## Set up:
+![bef](https://user-images.githubusercontent.com/94164580/202905001-df4195d5-673e-484d-b07d-91ef24c50092.png)
+## Output:
+![af](https://user-images.githubusercontent.com/94164580/202905007-a8f83e07-bc05-4ec5-a095-9a5aa45ee363.png)
+## Layout:
+![lay](https://user-images.githubusercontent.com/94164580/202905006-c9e534b1-157c-44a6-be7a-925bddcfa7cc.png)
 ## Result :
 Interfacing a keypad 4x4 is interfaced  with LPC2148
 
